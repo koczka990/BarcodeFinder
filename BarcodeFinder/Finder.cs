@@ -24,21 +24,21 @@ namespace BarcodeFinder
 
 
             Mat prob = probabilityBarcode(gradY, gradY.Width/200, 200, 0.2);
-            Cv2.ImShow("grad", prob);
+            //Cv2.ImShow("grad", prob);
 
             var kernel = Cv2.GetStructuringElement(MorphShapes.Rect, new Size(21, 7));
             Mat closed = new Mat();
             Cv2.MorphologyEx(prob, closed, MorphTypes.Close, kernel);
-            Cv2.ImShow("Closed", closed);
+            //Cv2.ImShow("Closed", closed);
             
             Cv2.Erode(closed, closed, new Mat(), null, 30);
             Cv2.Dilate(closed, closed, new Mat(), null, 30);
-            Cv2.ImShow("eroded", closed);
+            //Cv2.ImShow("eroded", closed);
 
             Mat[] contours;
             Cv2.FindContours(closed, out contours, new Mat(), RetrievalModes.External, ContourApproximationModes.ApproxSimple);
             Cv2.DrawContours(original, contours, -1, new Scalar(255, 0, 255), 2);
-            Cv2.ImShow("output", original);
+            //Cv2.ImShow("output", original);
             //Mat blurred = new Mat();
             //Cv2.Blur(gradY, blurred, new Size(9, 9));
             //Cv2.ImShow("blurred", blurred);
