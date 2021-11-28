@@ -8,34 +8,6 @@ namespace BarcodeFinder
     class Finder
     {
         const int WHITEBLACKTHRESHOLD = 10;
-        //public Rect FindBarcode(Mat frame)
-        //{
-        //    var indexer = frame.GetGenericIndexer<Vec3b>();
-        //    var rows = new List<int>();
-        //    var columns = new List<int>();
-        //    for(int y = 0; y < frame.Height; y++){
-        //        int blackPixelsInaRow = 0;
-        //        int currentnumOfBlackPixels = 0;
-        //        int whitePixelsInaRow = 0;
-        //        int currentnumOfWhitePixels = 0;
-        //        bool whitePrev = false;
-        //        bool blackPrev = false;
-        //        for(int x = 0; x < frame.Width; x++)
-        //        {
-        //            if(closeToWhite(indexer[y,x], WHITEBLACKTHRESHOLD)){
-                        
-        //                if (white)
-        //                {
-        //                    n += 1;
-        //                }
-        //            }
-        //            if(closeToBlack(indexer[y,x], WHITEBLACKTHRESHOLD))
-        //            {
-
-        //            }
-        //        }
-        //    }
-        //}
 
         private bool closeToWhite(Vec3b color, int v)
         {
