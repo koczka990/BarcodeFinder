@@ -11,25 +11,47 @@ namespace BarcodeFinder
 
         public void ScharrImage(Mat original)
         {
-            Cv2.CvtColor(original, original, ColorConversionCodes.BGR2GRAY);
+            Mat gray = new Mat();
+            Cv2.CvtColor(original, gray, ColorConversionCodes.BGR2GRAY);
 
             Mat gradX = new Mat();
             Mat gradY = new Mat();
 
-            Cv2.Scharr(original, gradX, MatType.CV_8UC1, 0, 1);
-            Cv2.Scharr(original, gradY, MatType.CV_8UC1, 1, 0);
+            Cv2.Scharr(gray, gradX, MatType.CV_8UC1, 0, 1);
+            Cv2.Scharr(gray, gradY, MatType.CV_8UC1, 1, 0);
             //Cv2.Erode(gradY, gradY, new Mat());
-            
-            
 
-            Mat prob = probabilityBarcode(gradY, gradY.Width/100, 200, 0.2);
-            Cv2.ImShow("dilateErodeBefore", prob);
-            Cv2.Dilate(prob, prob, new Mat(), null, 5);
-            Cv2.Erode(prob, prob, new Mat(), null, 7);
+
+
+            Mat prob = probabilityBarcode(gradY, gradY.Width/200, 200, 0.2);
+            Cv2.ImShow("grad", prob);
+
+            var kernel = Cv2.GetStructuringElement(MorphShapes.Rect, new Size(21, 7));
+            Mat closed = new Mat();
+            Cv2.MorphologyEx(prob, closed, MorphTypes.Close, kernel);
+            Cv2.ImShow("Closed", closed);
+            
+            Cv2.Erode(closed, closed, new Mat(), null, 30);
+            Cv2.Dilate(closed, closed, new Mat(), null, 30);
+            Cv2.ImShow("eroded", closed);
+
+            Mat[] contours;
+            Cv2.FindContours(closed, out contours, new Mat(), RetrievalModes.External, ContourApproximationModes.ApproxSimple);
+            Cv2.DrawContours(original, contours, -1, new Scalar(255, 0, 255), 2);
+            Cv2.ImShow("output", original);
+            //Mat blurred = new Mat();
+            //Cv2.Blur(gradY, blurred, new Size(9, 9));
+            //Cv2.ImShow("blurred", blurred);
+
+            //Cv2.Threshold(blurred, blurred, 155, 255, ThresholdTypes.Binary);
+            //Cv2.ImShow("Thresholded", blurred);
+
+            //Cv2.Dilate(prob, prob, new Mat(), null, 5);
+
             //Mat grad = gradX + gradY;
             //Cv2.ImShow("gradX", gradX);
             //Cv2.ImShow("gradY", gradY);
-            Cv2.ImShow("PROB", prob);
+            //Cv2.ImShow("PROB", prob);
             //Cv2.ImShow("grad", grad);
         }
 

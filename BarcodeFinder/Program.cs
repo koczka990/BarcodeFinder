@@ -7,19 +7,10 @@ namespace BarcodeFinder
     {
         static void Main(string[] args)
         {
-            var image = Cv2.ImRead("C:\\Users\\koczk\\AAAAA\\BME\\5.felev\\témalabor\\barcode_test\\BarcodeFinder\\BarcodeFinder\\pictures\\barcode2.png");
+            var image = Cv2.ImRead("C:\\Users\\koczk\\AAAAA\\BME\\5.felev\\témalabor\\barcode_test\\BarcodeFinder\\BarcodeFinder\\pictures\\barcode3.png");
             
             Finder finder = new Finder();
-            //Mat gray = finder.createGrayScaleFromG(image);
-            //Mat gray = finder.createGrayScale(image);
-            //Mat gray = finder.createGrayScaleImage(image);
-            //Cv2.ImShow("output", gray);
-
-            //Cv2.ImShow("original", image);
             finder.ScharrImage(image);
-            //Mat hehe = finder.createGrayScaleImage(image);
-            //Cv2.ImShow("output", image);
-            //Cv2.ImShow("hehe", hehe);
             Cv2.WaitKey();
 
 
